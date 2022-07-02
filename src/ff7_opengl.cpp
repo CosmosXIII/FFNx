@@ -148,7 +148,7 @@ void ff7_init_hooks(struct game_obj *_game_object)
 
 	// phoenix camera animation glitch
 	memset_code(ff7_externals.run_phoenix_main_loop_516297 + 0x3A5, 0x90, 49);
-    memset_code(ff7_externals.run_phoenix_main_loop_516297 + 0x3F7, 0x90, 49);
+	memset_code(ff7_externals.run_phoenix_main_loop_516297 + 0x3F7, 0x90, 49);
 
 	// ##################################
 	// bugfixes to enhance game stability
