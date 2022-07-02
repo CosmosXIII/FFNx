@@ -32,6 +32,7 @@
 #include "../patch.h"
 #include "../sfx.h"
 #include "../movies.h"
+#include "../common.h"
 #include "defs.h"
 #include <set>
 #include <cmath>
@@ -211,8 +212,8 @@ void field_layer1_pick_tiles(short bg_position_x, short bg_position_y)
 		uint32_t tile_index = (*ff7_externals.field_layer1_palette_sort)[i];
 		layer1_tiles[tile_index].field_1044 = 1;
 
-		if(layer1_tiles[tile_index].x < bg_position.x && layer1_tiles[tile_index].x > bg_position.x - 336
-			&& layer1_tiles[tile_index].y < bg_position.y && layer1_tiles[tile_index].y > bg_position.y - 256)
+		//if(layer1_tiles[tile_index].x < bg_position.x && layer1_tiles[tile_index].x > bg_position.x - 336
+		//	&& layer1_tiles[tile_index].y < bg_position.y && layer1_tiles[tile_index].y > bg_position.y - 256)
 		{
 			tile_position.x = initial_pos.x + field_bg_multiplier * layer1_tiles[tile_index].x;
 			tile_position.y = initial_pos.y + field_bg_multiplier * layer1_tiles[tile_index].y;
@@ -393,10 +394,24 @@ void field_layer4_pick_tiles(short bg_position_x, short bg_position_y)
 void field_clip_with_camera_range_float(vector2<float>* point)
 {
 	field_trigger_header* field_triggers_header_ptr = *ff7_externals.field_triggers_header;
-	if (point->x > field_triggers_header_ptr->camera_range.right - 160)
-		point->x = field_triggers_header_ptr->camera_range.right - 160;
-	if (point->x < field_triggers_header_ptr->camera_range.left + 160)
-		point->x = field_triggers_header_ptr->camera_range.left + 160;
+	float halfWidth = 160;
+	if(aspect_ratio == AR_WIDESCREEN)
+	{
+		int cameraRange = field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left;
+#if 1
+		// This only clips backgrounds which width is enought to fill the whole screen in 16:9
+		if(cameraRange >= 320 + 106) halfWidth = 213;
+#else
+		// Currently disabled
+		// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
+		160 + std::min(53, cameraRange / 2 - 160);
+#endif
+	}
+
+	if (point->x > field_triggers_header_ptr->camera_range.right - halfWidth)
+		point->x = field_triggers_header_ptr->camera_range.right - halfWidth;
+	if (point->x < field_triggers_header_ptr->camera_range.left + halfWidth)
+		point->x = field_triggers_header_ptr->camera_range.left + halfWidth;
 	if (point->y > field_triggers_header_ptr->camera_range.top - 120)
 		point->y = field_triggers_header_ptr->camera_range.top - 120;
 	if (point->y < field_triggers_header_ptr->camera_range.bottom + 120)
@@ -405,22 +420,36 @@ void field_clip_with_camera_range_float(vector2<float>* point)
 
 void float_sub_643628(field_trigger_header *trigger_header, vector2<float> *delta_position)
 {
+	float halfWidth = 160;
+	if(aspect_ratio == AR_WIDESCREEN)
+	{
+		int cameraRange = trigger_header->camera_range.right - trigger_header->camera_range.left;
+#if 1
+		// This only clips backgrounds which width is enought to fill the whole screen in 16:9
+		if(cameraRange > 320 + 106) halfWidth = 213;
+#else
+		// Currently disabled
+		// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
+		halfWidth = 160 + std::min(53, cameraRange / 2 - 160);
+#endif
+	}
+
 	if (trigger_header->field_14[0] == 1)
 	{
 		float diff_top_bottom = trigger_header->camera_range.top - 120 - (trigger_header->camera_range.bottom + 120);
-		float diff_right_left = trigger_header->camera_range.right - 160 - (trigger_header->camera_range.left + 160);
-		float temp_1 = -(diff_top_bottom * (trigger_header->camera_range.bottom + 120 - delta_position->y) + diff_right_left * (trigger_header->camera_range.left + 160 - delta_position->x));
+		float diff_right_left = trigger_header->camera_range.right - halfWidth - (trigger_header->camera_range.left + halfWidth);
+		float temp_1 = -(diff_top_bottom * (trigger_header->camera_range.bottom + 120 - delta_position->y) + diff_right_left * (trigger_header->camera_range.left + halfWidth - delta_position->x));
 		float temp_square_value = (diff_top_bottom * diff_top_bottom + diff_right_left * diff_right_left) / 256.f;
-		delta_position->x = ((diff_right_left * temp_1 / temp_square_value) / 256.f) + trigger_header->camera_range.left + 160;
+		delta_position->x = ((diff_right_left * temp_1 / temp_square_value) / 256.f) + trigger_header->camera_range.left + halfWidth;
 		delta_position->y = ((diff_top_bottom * temp_1 / temp_square_value) / 256.f) + trigger_header->camera_range.bottom + 120;
 	}
 	if (trigger_header->field_14[0] == 2)
 	{
 		float diff_bottom_top = trigger_header->camera_range.bottom + 120 - (trigger_header->camera_range.top - 120);
-		float diff_right_left = trigger_header->camera_range.right - 160 - (trigger_header->camera_range.left + 160);
-		float temp_1 = -((diff_bottom_top) * (trigger_header->camera_range.top - 120 - delta_position->y) + diff_right_left * (trigger_header->camera_range.left + 160 - delta_position->x));
+		float diff_right_left = trigger_header->camera_range.right - halfWidth - (trigger_header->camera_range.left + halfWidth);
+		float temp_1 = -((diff_bottom_top) * (trigger_header->camera_range.top - 120 - delta_position->y) + diff_right_left * (trigger_header->camera_range.left + halfWidth - delta_position->x));
 		float temp_square_value = (diff_bottom_top * diff_bottom_top + diff_right_left * diff_right_left) / 256.f;
-		delta_position->x = ((diff_right_left * temp_1 / temp_square_value) / 256.f) + trigger_header->camera_range.left + 160;
+		delta_position->x = ((diff_right_left * temp_1 / temp_square_value) / 256.f) + trigger_header->camera_range.left + halfWidth;
 		delta_position->y = ((diff_bottom_top * temp_1 / temp_square_value) / 256.f) + trigger_header->camera_range.top - 120;
 	}
 }
@@ -429,6 +458,14 @@ void ff7_field_clip_with_camera_range(vector2<short>* point)
 {
 	vector2<float> proxy_point = {(float)point->x, (float)point->y};
 	field_clip_with_camera_range_float(&proxy_point);
+	point->x = round(proxy_point.x);
+	point->y = round(proxy_point.y);
+}
+
+void ff7_field_layer3_clip_with_camera_range(field_trigger_header* trigger_header, vector2<short>* point)
+{
+	vector2<float> proxy_point = {(float)point->x, (float)point->y};
+	float_sub_643628(*ff7_externals.field_triggers_header, &proxy_point);
 	point->x = round(proxy_point.x);
 	point->y = round(proxy_point.y);
 }
@@ -619,6 +656,37 @@ void field_update_scripted_bg_movement()
 		case 6:
 			if(*ff7_externals.scripted_world_move_n_steps)
 			{
+				field_trigger_header* field_triggers_header_ptr = *ff7_externals.field_triggers_header;
+				if(aspect_ratio = AR_WIDESCREEN)
+				{
+					int cameraRange = field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left;
+#if 1
+					// This only clips backgrounds which width is enought to fill the whole screen in 16:9
+					if(cameraRange >= 320 + 106)
+					{
+						if(213 - *ff7_externals.scripted_world_final_pos_x >  field_triggers_header_ptr->camera_range.right)
+						{
+							*ff7_externals.scripted_world_final_pos_x = 213 - field_triggers_header_ptr->camera_range.right;
+						}
+						if(-213 - *ff7_externals.scripted_world_final_pos_x < field_triggers_header_ptr->camera_range.left)
+						{
+							*ff7_externals.scripted_world_final_pos_x = 213 - field_triggers_header_ptr->camera_range.left;
+						}
+					}
+#else
+					// Currently disabled
+					// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
+					if(213 - *ff7_externals.scripted_world_final_pos_x >  field_triggers_header_ptr->camera_range.right)
+					{
+						*ff7_externals.scripted_world_final_pos_x = std::min(0, static_cast<int>(213 - field_triggers_header_ptr->camera_range.right));
+					}
+					if(-213 - *ff7_externals.scripted_world_final_pos_x < field_triggers_header_ptr->camera_range.left)
+					{
+						*ff7_externals.scripted_world_final_pos_x = std::max(0, static_cast<int>(-213 - field_triggers_header_ptr->camera_range.left));
+					}
+#endif
+				}
+
 				std::function<int(int, int, int, int)> field_get_interpolated_value = ff7_externals.modules_global_object->world_move_mode == 5 ?
 					ff7_externals.field_get_linear_interpolated_value : ff7_externals.field_get_smooth_interpolated_value;
 				*ff7_externals.field_curr_delta_world_pos_x = field_get_interpolated_value(

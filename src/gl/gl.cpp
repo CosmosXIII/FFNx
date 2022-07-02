@@ -293,6 +293,49 @@ void gl_draw_indexed_primitive(uint32_t primitivetype, uint32_t vertextype, stru
 	if (ff8) newRenderer.doModulateAlpha(false);
 	else newRenderer.doModulateAlpha(true);
 
+#if 0
+	// Currently disabled
+	// This tries to intercept the fade in/out draw calls to resized them for widescreen
+	// We need to find a better way to do this...
+	if(aspect_ratio == AR_WIDESCREEN)
+	{
+		if (vertextype == TLVERTEX &&
+			vertexcount == 4 &&
+			vertices[0]._.x == 0.0 && vertices[0]._.y == 16.0 &&
+			vertices[1]._.x == 0.0 && vertices[1]._.y == 464.0 &&
+			vertices[2]._.x == 640.0 && vertices[2]._.y == 16.0 &&
+			vertices[3]._.x == 640.0 && vertices[3]._.y == 464.0)
+		{
+			vertices[0]._.y = 0.0f;
+			vertices[1]._.y = 480.0f;
+			vertices[2]._.y = 0.0f;
+			vertices[3]._.y = 480.0f;
+
+			vertices[0]._.x = -106.0f;
+			vertices[1]._.x = -106.0f;
+			vertices[2]._.x = 747.0f;
+			vertices[3]._.x = 747.0f;
+		}
+
+		if (vertextype == TLVERTEX &&
+			vertexcount == 6 &&
+			vertices[0]._.x == 0.0 && vertices[0]._.y == 0.0 &&
+			vertices[1]._.x == 640.0 && vertices[1]._.y == 0.0 &&
+			vertices[2]._.x == 0.0 && vertices[2]._.y == 480.0 &&
+			vertices[3]._.x == 640.0 && vertices[3]._.y == 480.0 &&
+			vertices[4]._.x == 0.0 && vertices[4]._.y == 480.0 &&
+			vertices[5]._.x == 640.0 && vertices[5]._.y == 0.0)
+		{
+			vertices[0]._.x = -106.0f;
+			vertices[2]._.x = -106.0f;
+			vertices[4]._.x = -106.0f;
+			vertices[1]._.x = 747.0f;
+			vertices[3]._.x = 747.0f;
+			vertices[5]._.x = 747.0f;
+		}
+	}
+#endif
+
 	//// upload vertex data
 	newRenderer.bindVertexBuffer(vertices, normals, vertexcount);
 	newRenderer.bindIndexBuffer(indices, count);
