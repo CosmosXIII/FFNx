@@ -148,7 +148,7 @@ void ff7_init_hooks(struct game_obj *_game_object)
 
 	// phoenix camera animation glitch
 	memset_code(ff7_externals.run_phoenix_main_loop_516297 + 0x3A5, 0x90, 49);
-  memset_code(ff7_externals.run_phoenix_main_loop_516297 + 0x3F7, 0x90, 49);
+	memset_code(ff7_externals.run_phoenix_main_loop_516297 + 0x3F7, 0x90, 49);
 
 	// ##################################
 	// bugfixes to enhance game stability
@@ -227,6 +227,12 @@ void ff7_init_hooks(struct game_obj *_game_object)
 
 	// Field FPS fix (60FPS, 30FPS movies)
 	ff7_field_hook_init();
+
+	// #####################
+	// widescreen
+	// #####################
+	replace_function((uint32_t)ff7_externals.field_clip_with_camera_range_6438F6, ff7_field_clip_with_camera_range);
+	replace_function(ff7_externals.field_layer3_clip_with_camera_range_643628, ff7_field_layer3_clip_with_camera_range);
 
 	// #####################
 	// worldmap footsteps
