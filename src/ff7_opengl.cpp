@@ -233,6 +233,7 @@ void ff7_init_hooks(struct game_obj *_game_object)
 	// #####################
 	replace_function((uint32_t)ff7_externals.field_clip_with_camera_range_6438F6, ff7_field_clip_with_camera_range);
 	replace_function(ff7_externals.field_layer3_clip_with_camera_range_643628, ff7_field_layer3_clip_with_camera_range);
+	replace_function(ff7_externals.field_culling_model_639252, ff7_field_do_draw_3d_model);
 
 	// #####################
 	// worldmap footsteps

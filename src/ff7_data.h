@@ -1158,6 +1158,11 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.g_active_actor_id = (byte*)get_absolute_value(ff7_externals.display_battle_action_text_42782A, 0x52);
 	// --------------------------------
 
+	// Widescreen
+	ff7_externals.field_sub_6392BB = get_relative_call(field_main_loop, 0xF6);
+	ff7_externals.field_culling_model_639252 = get_relative_call(ff7_externals.field_sub_6392BB, 0x203);
+	// --------------------------------
+
 	// Steam achievement
 	uint32_t sub_434347 = get_relative_call(ff7_externals.battle_loop, 0x484);
 	uint32_t* pointer_functions_7C2980 = (uint32_t*)get_absolute_value(sub_434347, 0x19C);

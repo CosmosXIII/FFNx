@@ -84,6 +84,7 @@ void ff7_field_clip_with_camera_range(vector2<short>* point);
 void ff7_field_layer3_clip_with_camera_range(field_trigger_header* trigger_header, vector2<short>* point);
 uint32_t field_open_flevel_siz();
 void field_update_scripted_bg_movement();
+bool ff7_field_do_draw_3d_model(short x, short y);
 
 // world
 void ff7_world_hook_init();

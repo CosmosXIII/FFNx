@@ -434,6 +434,16 @@ void ff7_field_submit_draw_cursor(field_arrow_graphics_data* arrow_data)
 	ff7_externals.field_submit_draw_arrow_63A171(arrow_data);
 }
 
+bool ff7_field_do_draw_3d_model(short x, short y)
+{
+	if(*ff7_externals.field_bg_flag_CC15E4)
+		return 1;
+	int leftOffsetX = AR_WIDESCREEN ? 93 : 40;
+	int rightOffsetX = AR_WIDESCREEN ? 453 : 400;
+	return x > ff7_externals.field_viewport_xy_CFF204->x - leftOffsetX && x < ff7_externals.field_viewport_xy_CFF204->x + rightOffsetX &&
+		y > ff7_externals.field_viewport_xy_CFF204->y - 120 && y < ff7_externals.field_viewport_xy_CFF204->y + 460;
+}
+
 void field_clip_with_camera_range_float(vector2<float>* point)
 {
 	field_trigger_header* field_triggers_header_ptr = *ff7_externals.field_triggers_header;
