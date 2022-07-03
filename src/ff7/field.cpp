@@ -444,6 +444,18 @@ bool ff7_field_do_draw_3d_model(short x, short y)
 		y > ff7_externals.field_viewport_xy_CFF204->y - 120 && y < ff7_externals.field_viewport_xy_CFF204->y + 460;
 }
 
+void ff7_field_set_fade_quad_size(int x, int y, int width, int height)
+{
+	if(aspect_ratio == AR_WIDESCREEN)
+	{
+		x -= 106;
+		y -= ff7_center_fields ? 16 : 0;
+		width += 213;
+		height += 32;
+	}
+	ff7_externals.field_sub_63AC3F(x, y, width, height);
+}
+
 void field_clip_with_camera_range_float(vector2<float>* point)
 {
 	field_trigger_header* field_triggers_header_ptr = *ff7_externals.field_triggers_header;
