@@ -32,6 +32,10 @@
 
 unsigned char midi_fix[] = {0x8B, 0x4D, 0x14};
 WORD snowboard_fix[] = {0x0F, 0x10, 0x0F};
+int swirl_viewport_x_widescreen_fix = -103;
+int framebuffer_offset_x_widescreen_fix = 103;
+int framebuffer_offset_y_widescreen_fix = 64;
+int swirl_viewport_width_widescreen_fix = 853;
 
 void ff7_init_hooks(struct game_obj *_game_object)
 {
@@ -235,6 +239,17 @@ void ff7_init_hooks(struct game_obj *_game_object)
 	replace_function(ff7_externals.field_layer3_clip_with_camera_range_643628, ff7_field_layer3_clip_with_camera_range);
 	replace_function(ff7_externals.field_culling_model_639252, ff7_field_do_draw_3d_model);
 	replace_call_function(ff7_externals.field_sub_63AC66 + 0xD5, ff7_field_set_fade_quad_size);
+	if (aspect_ratio == AR_WIDESCREEN)
+	{
+		// Swirl fix
+		patch_code_dword(ff7_externals.swirl_loop_sub_4026D4 + 0x335, (uint32_t)&swirl_viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_sub_401810 + 0x21, (uint32_t)&swirl_viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0xEE, (uint32_t)&framebuffer_offset_x_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0x112, (uint32_t)&framebuffer_offset_x_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0xFB, (uint32_t)&framebuffer_offset_y_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0x11F, (uint32_t)&framebuffer_offset_y_widescreen_fix);
+		patch_code_int(ff7_externals.swirl_enter_40164E + 0xE8, 85);
+	}
 
 	// #####################
 	// worldmap footsteps

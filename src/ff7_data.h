@@ -1132,6 +1132,8 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	// Swirl externals
 	ff7_externals.swirl_main_loop = swirl_main_loop;
 	ff7_externals.swirl_loop_sub_4026D4 = get_relative_call(swirl_main_loop, 0xC9);
+	ff7_externals.swirl_enter_40164E = get_absolute_value(main_loop, 0x254);
+	ff7_externals.swirl_enter_sub_401810 = get_relative_call(ff7_externals.swirl_enter_40164E, 0x160);
 
 	// --------------------------------
 

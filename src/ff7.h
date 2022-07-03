@@ -2984,6 +2984,8 @@ struct ff7_externals
 
 	uint32_t swirl_main_loop;
 	uint32_t swirl_loop_sub_4026D4;
+	uint32_t swirl_enter_40164E;
+	uint32_t swirl_enter_sub_401810;
 
 	uint32_t field_sub_6392BB;
 	uint32_t field_culling_model_639252;
