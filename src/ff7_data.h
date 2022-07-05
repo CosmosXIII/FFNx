@@ -1165,6 +1165,12 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.field_culling_model_639252 = get_relative_call(ff7_externals.field_sub_6392BB, 0x203);
 	ff7_externals.field_sub_63AC66 = get_relative_call(ff7_externals.sub_60DF96, 0xB0);
 	ff7_externals.field_sub_63AC3F = (void(*)(int, int, int, int))get_relative_call(ff7_externals.field_sub_63AC66, 0xD5);
+
+	ff7_externals.battle_draw_quad_5BD473 = get_relative_call(ff7_externals.battle_boss_death_call_5BD436, 0x16);
+	ff7_externals.battle_sub_5895E0 = ff7_externals.enemy_atk_effects_fn_table[119];
+	ff7_externals.battle_sub_589827 = get_relative_call(ff7_externals.battle_sub_5895E0, 0x10D);
+	ff7_externals.battle_sub_58AC59 = get_absolute_value(ff7_externals.battle_sub_589827, 0x64);
+	ff7_externals.battle_sub_58ACB9 = get_relative_call(ff7_externals.battle_sub_58AC59, 0x22);
 	// --------------------------------
 
 	// Steam achievement

@@ -2991,6 +2991,11 @@ struct ff7_externals
 	uint32_t field_culling_model_639252;
 	uint32_t field_sub_63AC66;
 	void (*field_sub_63AC3F)(int, int, int, int);
+	uint32_t battle_draw_quad_5BD473;
+	uint32_t battle_sub_5895E0;
+	uint32_t battle_sub_589827;
+	uint32_t battle_sub_58AC59;
+	uint32_t battle_sub_58ACB9;
 };
 
 uint32_t ff7gl_load_group(uint32_t group_num, struct matrix_set *matrix_set, struct p_hundred *hundred_data, struct p_group *group_data, struct polygon_data *polygon_data, struct ff7_polygon_set *polygon_set, struct ff7_game_obj *game_object);

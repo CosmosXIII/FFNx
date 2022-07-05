@@ -32,10 +32,10 @@
 
 unsigned char midi_fix[] = {0x8B, 0x4D, 0x14};
 WORD snowboard_fix[] = {0x0F, 0x10, 0x0F};
-int swirl_viewport_x_widescreen_fix = -103;
-int framebuffer_offset_x_widescreen_fix = 103;
-int framebuffer_offset_y_widescreen_fix = 64;
-int swirl_viewport_width_widescreen_fix = 853;
+int viewport_x_widescreen_fix = -106;
+int viewport_width_widescreen_fix = 856;
+int swirl_framebuffer_offset_x_widescreen_fix = 103;
+int swirl_framebuffer_offset_y_widescreen_fix = 64;
 
 void ff7_init_hooks(struct game_obj *_game_object)
 {
@@ -242,13 +242,33 @@ void ff7_init_hooks(struct game_obj *_game_object)
 	if (aspect_ratio == AR_WIDESCREEN)
 	{
 		// Swirl fix
-		patch_code_dword(ff7_externals.swirl_loop_sub_4026D4 + 0x335, (uint32_t)&swirl_viewport_x_widescreen_fix);
-		patch_code_dword(ff7_externals.swirl_enter_sub_401810 + 0x21, (uint32_t)&swirl_viewport_width_widescreen_fix);
-		patch_code_dword(ff7_externals.swirl_enter_40164E + 0xEE, (uint32_t)&framebuffer_offset_x_widescreen_fix);
-		patch_code_dword(ff7_externals.swirl_enter_40164E + 0x112, (uint32_t)&framebuffer_offset_x_widescreen_fix);
-		patch_code_dword(ff7_externals.swirl_enter_40164E + 0xFB, (uint32_t)&framebuffer_offset_y_widescreen_fix);
-		patch_code_dword(ff7_externals.swirl_enter_40164E + 0x11F, (uint32_t)&framebuffer_offset_y_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_loop_sub_4026D4 + 0x335, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_sub_401810 + 0x21, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0xEE, (uint32_t)&swirl_framebuffer_offset_x_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0x112, (uint32_t)&swirl_framebuffer_offset_x_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0xFB, (uint32_t)&swirl_framebuffer_offset_y_widescreen_fix);
+		patch_code_dword(ff7_externals.swirl_enter_40164E + 0x11F, (uint32_t)&swirl_framebuffer_offset_y_widescreen_fix);
 		patch_code_int(ff7_externals.swirl_enter_40164E + 0xE8, 85);
+
+		// Battle fix
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x4B, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x68, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x8B, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0xB4, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x105, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x122, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x141, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x16A, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x19F, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_5BD050 + 0x1BB, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_enter + 0x229, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_enter + 0x22F, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_draw_quad_5BD473 + 0xDA, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_draw_quad_5BD473 + 0x112, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_58ACB9 + 0x55, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.battle_sub_58ACB9 + 0x65, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.display_battle_damage_5BB410 + 0x23F, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.display_battle_damage_5BB410 + 0x24C, (uint32_t)&viewport_x_widescreen_fix);
 	}
 
 	// #####################
