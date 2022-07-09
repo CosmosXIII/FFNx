@@ -2824,6 +2824,7 @@ struct ff7_externals
 	uint32_t run_phoenix_main_loop_516297;
 	uint32_t run_phoenix_movement_518AFF;
 	uint32_t run_phoenix_camera_515238;
+	uint32_t run_bahamut_neo_main_48C2A1;
 	uint32_t run_bahamut_neo_movement_48D7BC;
 	uint32_t run_bahamut_neo_camera_48C75D;
 	uint32_t run_hades_camera_4B65A8;
@@ -2999,6 +3000,8 @@ struct ff7_externals
 	uint32_t ifrit_sub_595A05;
 	void (*engine_draw_sub_66A47E)(int);
 	int* battle_viewport_height;
+	uint32_t neo_bahamut_main_loop_48DA7A;
+	uint32_t neo_bahamut_effect_sub_490F2A;
 };
 
 uint32_t ff7gl_load_group(uint32_t group_num, struct matrix_set *matrix_set, struct p_hundred *hundred_data, struct p_group *group_data, struct polygon_data *polygon_data, struct ff7_polygon_set *polygon_set, struct ff7_game_obj *game_object);

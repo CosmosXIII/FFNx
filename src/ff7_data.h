@@ -955,8 +955,8 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.run_phoenix_main_loop_516297 = get_absolute_value(run_summon_phoenix_sub_515127, 0xB2);
 	ff7_externals.run_phoenix_movement_518AFF = get_absolute_value(ff7_externals.run_phoenix_main_loop_516297, 0x310);
 	ff7_externals.run_phoenix_camera_515238 = get_absolute_value(run_summon_phoenix_camera_handler_5151F8, 0x5);
-	uint32_t run_bahamut_neo_main_48C2A1 = get_relative_call(ff7_externals.run_summon_animations_5C0E4B, 0x377);
-	uint32_t run_bahamut_neo_sub_48C60B = get_relative_call(run_bahamut_neo_main_48C2A1, 0x35D);
+	ff7_externals.run_bahamut_neo_main_48C2A1 = get_relative_call(ff7_externals.run_summon_animations_5C0E4B, 0x377);
+	uint32_t run_bahamut_neo_sub_48C60B = get_relative_call(ff7_externals.run_bahamut_neo_main_48C2A1, 0x35D);
 	uint32_t run_bahamut_neo_camera_handler_48C71D = get_relative_call(run_bahamut_neo_sub_48C60B, 0xD2);
 	ff7_externals.run_bahamut_neo_movement_48D7BC = get_absolute_value(run_bahamut_neo_sub_48C60B, 0xAA);
 	ff7_externals.run_bahamut_neo_camera_48C75D = get_absolute_value(run_bahamut_neo_camera_handler_48C71D, 0x5);
@@ -1174,6 +1174,8 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.ifrit_sub_595A05 = get_absolute_value(run_ifrit_main_loop_593A95, 0x51B);
 	ff7_externals.engine_draw_sub_66A47E = (void(*)(int))get_relative_call(ff7_externals.ifrit_sub_595A05, 0x930);
 	ff7_externals.battle_viewport_height = (int*)get_absolute_value(battle_main_loop, 0x151);
+	ff7_externals.neo_bahamut_main_loop_48DA7A = get_absolute_value(run_bahamut_neo_sub_48C60B, 0xF3);
+	ff7_externals.neo_bahamut_effect_sub_490F2A = get_absolute_value(ff7_externals.neo_bahamut_main_loop_48DA7A, 0x2CD);
 	// --------------------------------
 
 	// Steam achievement

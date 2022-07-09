@@ -272,6 +272,22 @@ void ff7_init_hooks(struct game_obj *_game_object)
 		replace_call_function(ff7_externals.ifrit_sub_595A05 + 0x930, ifrit_first_wave_effect_widescreen_fix_sub_66A47E);
 		replace_call_function(ff7_externals.ifrit_sub_595A05 + 0xAEC, ifrit_second_third_wave_effect_widescreen_fix_sub_66A47E);
 		replace_call_function(ff7_externals.ifrit_sub_595A05 + 0xCC0, ifrit_second_third_wave_effect_widescreen_fix_sub_66A47E);
+		patch_code_int(ff7_externals.neo_bahamut_effect_sub_490F2A + 0x58, viewport_width_widescreen_fix / 4);
+		patch_code_dword(ff7_externals.neo_bahamut_effect_sub_490F2A + 0x5D, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.neo_bahamut_effect_sub_490F2A + 0x6A, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_int(ff7_externals.neo_bahamut_effect_sub_490F2A + 0x88, viewport_width_widescreen_fix / 4);
+		patch_code_dword(ff7_externals.neo_bahamut_effect_sub_490F2A + 0x1A2, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.neo_bahamut_effect_sub_490F2A + 0x1AF, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x140, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x15B, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x19B, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x1D1, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x20E, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x243, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x28A, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x2C0, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x2FC, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x332, (uint32_t)&viewport_width_widescreen_fix);
 	}
 
 	// #####################
