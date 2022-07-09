@@ -438,9 +438,9 @@ bool ff7_field_do_draw_3d_model(short x, short y)
 {
 	if(*ff7_externals.field_bg_flag_CC15E4)
 		return 1;
-	int leftOffsetX = AR_WIDESCREEN ? 93 : 40;
-	int rightOffsetX = AR_WIDESCREEN ? 453 : 400;
-	return x > ff7_externals.field_viewport_xy_CFF204->x - leftOffsetX && x < ff7_externals.field_viewport_xy_CFF204->x + rightOffsetX &&
+	int left_offset_x = AR_WIDESCREEN ? 93 : 40;
+	int right_offset_x = AR_WIDESCREEN ? 453 : 400;
+	return x > ff7_externals.field_viewport_xy_CFF204->x - left_offset_x && x < ff7_externals.field_viewport_xy_CFF204->x + right_offset_x &&
 		y > ff7_externals.field_viewport_xy_CFF204->y - 120 && y < ff7_externals.field_viewport_xy_CFF204->y + 460;
 }
 
