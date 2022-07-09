@@ -1176,6 +1176,8 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.battle_viewport_height = (int*)get_absolute_value(battle_main_loop, 0x151);
 	ff7_externals.neo_bahamut_main_loop_48DA7A = get_absolute_value(run_bahamut_neo_sub_48C60B, 0xF3);
 	ff7_externals.neo_bahamut_effect_sub_490F2A = get_absolute_value(ff7_externals.neo_bahamut_main_loop_48DA7A, 0x2CD);
+	ff7_externals.odin_gunge_effect_sub_4A4BE6 = get_absolute_value(run_summon_odin_gunge_main_loop_4A0B6D, 0xA7);
+	ff7_externals.odin_gunge_effect_sub_4A3A2E = get_absolute_value(run_summon_odin_gunge_main_loop_4A0B6D, 0x2D8);
 	ff7_externals.typhoon_sub_4D6FF8 = get_relative_call(run_typhoon_main_loop_4D69A6, 0x4B7);
 	ff7_externals.typhoon_effect_sub_4D7044 = get_absolute_value(ff7_externals.typhoon_sub_4D6FF8, 0xF);
 	ff7_externals.typhoon_effect_sub_4DB15F = get_absolute_value(run_typhoon_main_loop_4D69A6, 0x416);

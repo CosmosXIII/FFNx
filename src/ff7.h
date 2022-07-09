@@ -3002,6 +3002,8 @@ struct ff7_externals
 	int* battle_viewport_height;
 	uint32_t neo_bahamut_main_loop_48DA7A;
 	uint32_t neo_bahamut_effect_sub_490F2A;
+	uint32_t odin_gunge_effect_sub_4A4BE6;
+	uint32_t odin_gunge_effect_sub_4A3A2E;
 	uint32_t typhoon_effect_sub_4DB15F;
 	uint32_t typhoon_sub_4D6FF8;
 	uint32_t typhoon_effect_sub_4D7044;
