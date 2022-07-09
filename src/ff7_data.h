@@ -1171,6 +1171,9 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.battle_sub_589827 = get_relative_call(ff7_externals.battle_sub_5895E0, 0x10D);
 	ff7_externals.battle_sub_58AC59 = get_absolute_value(ff7_externals.battle_sub_589827, 0x64);
 	ff7_externals.battle_sub_58ACB9 = get_relative_call(ff7_externals.battle_sub_58AC59, 0x22);
+	ff7_externals.ifrit_sub_595A05 = get_absolute_value(run_ifrit_main_loop_593A95, 0x51B);
+	ff7_externals.engine_draw_sub_66A47E = (void(*)(int))get_relative_call(ff7_externals.ifrit_sub_595A05, 0x930);
+	ff7_externals.battle_viewport_height = (int*)get_absolute_value(battle_main_loop, 0x151);
 	// --------------------------------
 
 	// Steam achievement

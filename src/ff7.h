@@ -2996,6 +2996,9 @@ struct ff7_externals
 	uint32_t battle_sub_589827;
 	uint32_t battle_sub_58AC59;
 	uint32_t battle_sub_58ACB9;
+	uint32_t ifrit_sub_595A05;
+	void (*engine_draw_sub_66A47E)(int);
+	int* battle_viewport_height;
 };
 
 uint32_t ff7gl_load_group(uint32_t group_num, struct matrix_set *matrix_set, struct p_hundred *hundred_data, struct p_group *group_data, struct polygon_data *polygon_data, struct ff7_polygon_set *polygon_set, struct ff7_game_obj *game_object);
