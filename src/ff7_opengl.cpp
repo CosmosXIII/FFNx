@@ -288,6 +288,10 @@ void ff7_init_hooks(struct game_obj *_game_object)
 		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x2C0, (uint32_t)&viewport_width_widescreen_fix);
 		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x2FC, (uint32_t)&viewport_x_widescreen_fix);
 		patch_code_dword(ff7_externals.run_bahamut_neo_main_48C2A1 + 0x332, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.typhoon_effect_sub_4D7044 + 0x1B, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.typhoon_effect_sub_4D7044 + 0x36, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.typhoon_effect_sub_4DB15F + 0x22, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.typhoon_effect_sub_4DB15F + 0x3D, (uint32_t)&viewport_width_widescreen_fix);
 	}
 
 	// #####################

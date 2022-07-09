@@ -3002,6 +3002,9 @@ struct ff7_externals
 	int* battle_viewport_height;
 	uint32_t neo_bahamut_main_loop_48DA7A;
 	uint32_t neo_bahamut_effect_sub_490F2A;
+	uint32_t typhoon_effect_sub_4DB15F;
+	uint32_t typhoon_sub_4D6FF8;
+	uint32_t typhoon_effect_sub_4D7044;
 };
 
 uint32_t ff7gl_load_group(uint32_t group_num, struct matrix_set *matrix_set, struct p_hundred *hundred_data, struct p_group *group_data, struct polygon_data *polygon_data, struct ff7_polygon_set *polygon_set, struct ff7_game_obj *game_object);
