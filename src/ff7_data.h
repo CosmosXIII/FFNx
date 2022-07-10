@@ -1181,6 +1181,11 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.typhoon_sub_4D6FF8 = get_relative_call(run_typhoon_main_loop_4D69A6, 0x4B7);
 	ff7_externals.typhoon_effect_sub_4D7044 = get_absolute_value(ff7_externals.typhoon_sub_4D6FF8, 0xF);
 	ff7_externals.typhoon_effect_sub_4DB15F = get_absolute_value(run_typhoon_main_loop_4D69A6, 0x416);
+	ff7_externals.fat_chocobo_sub_5096F3 = get_absolute_value(run_fat_chocobo_main_loop_508BED, 0x110);
+	uint32_t barret_limit_3_1_main_46FF90 = ff7_externals.limit_break_effects_fn_table[11];
+	uint32_t barret_limit_3_1_sub_46FFAC = get_relative_call(barret_limit_3_1_main_46FF90, 0x10);
+	uint32_t barret_limit_3_1_sub_470031 = get_absolute_value(barret_limit_3_1_sub_46FFAC, 0x44);
+	ff7_externals.barret_limit_3_1_sub_4700F7 = get_absolute_value(barret_limit_3_1_sub_470031, 0x36);
 	// --------------------------------
 
 	// Steam achievement
