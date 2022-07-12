@@ -1128,6 +1128,12 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.is_wait_frames_zero_E39BC0 = (int*)get_absolute_value(ff7_externals.run_world_event_scripts_system_operations, 0xD46);
 	ff7_externals.world_sub_75A1C6 = get_relative_call(ff7_externals.world_init_variables_74E1E9, 0x3A);
 	ff7_externals.world_sub_75A5D5 = get_relative_call(ff7_externals.world_sub_75A1C6, 0x61);
+	ff7_externals.world_draw_fade_quad_75551A = get_relative_call(ff7_externals.world_mode_loop_sub_74DB8C, 0x554);
+	ff7_externals.world_sub_75079D = get_relative_call(ff7_externals.world_mode_loop_sub_74DB8C, 0x421);
+	ff7_externals.world_sub_751EFC = get_relative_call(ff7_externals.world_sub_75079D, 0x1FB);
+	ff7_externals.world_culling_bg_meshes_75F263 = get_relative_call(ff7_externals.world_sub_751EFC, 0x7C6);
+	ff7_externals.world_compute_skybox_data_754100 = get_relative_call(ff7_externals.world_mode_loop_sub_74DB8C, 0x537);
+	ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 = get_relative_call(ff7_externals.world_mode_loop_sub_74DB8C, 0x547);
 
 	// Swirl externals
 	ff7_externals.swirl_main_loop = swirl_main_loop;

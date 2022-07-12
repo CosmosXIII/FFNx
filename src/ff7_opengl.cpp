@@ -34,7 +34,7 @@ unsigned char midi_fix[] = {0x8B, 0x4D, 0x14};
 WORD snowboard_fix[] = {0x0F, 0x10, 0x0F};
 int viewport_x_widescreen_fix = -106;
 int viewport_width_widescreen_fix = 856;
-int swirl_framebuffer_offset_x_widescreen_fix = 103;
+int swirl_framebuffer_offset_x_widescreen_fix = 106;
 int swirl_framebuffer_offset_y_widescreen_fix = 64;
 
 void ff7_init_hooks(struct game_obj *_game_object)
@@ -300,6 +300,33 @@ void ff7_init_hooks(struct game_obj *_game_object)
 		patch_code_dword(ff7_externals.barret_limit_3_1_sub_4700F7 + 0x36, (uint32_t)&viewport_width_widescreen_fix);
 		patch_code_dword(ff7_externals.fat_chocobo_sub_5096F3 + 0x4A, (uint32_t)&viewport_x_widescreen_fix);
 		patch_code_dword(ff7_externals.fat_chocobo_sub_5096F3 + 0x5F, (uint32_t)&viewport_width_widescreen_fix);
+
+		// Worldmap
+		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x12, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x1A3, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x2BE, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x331, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x4E8, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x54A, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.world_culling_bg_meshes_75F263 + 0xE, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.world_culling_bg_meshes_75F263 + 0x20, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.world_culling_bg_meshes_75F263 + 0x26, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_short(ff7_externals.world_compute_skybox_data_754100 + 0x174, -244);
+		patch_code_short(ff7_externals.world_compute_skybox_data_754100 + 0x1D1, 244);
+		patch_code_short(ff7_externals.world_compute_skybox_data_754100 + 0x22E, -244);
+		patch_code_short(ff7_externals.world_compute_skybox_data_754100 + 0x282, 244);
+		patch_code_byte(ff7_externals.world_compute_skybox_data_754100 + 0x180, 44);
+		patch_code_byte(ff7_externals.world_compute_skybox_data_754100 + 0x1DD, 44);
+		patch_code_short(ff7_externals.world_compute_skybox_data_754100 + 0x237, 20);
+		patch_code_short(ff7_externals.world_compute_skybox_data_754100 + 0x28B, 20);
+		patch_code_short(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x132, -256);
+		patch_code_int(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x144, 256);
+		patch_code_byte(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x15C, 0);
+		patch_code_short(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x16D, 256);
+		patch_code_int(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x2DC, 0);
+		patch_code_int(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x40F, 0);
+		patch_code_dword(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x5A5, (uint32_t)&viewport_x_widescreen_fix); // Meteor avoid culling
+		patch_code_int(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x5B5, 360); // Meteor avoid culling
 	}
 
 	// #####################
