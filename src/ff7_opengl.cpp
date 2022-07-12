@@ -269,6 +269,8 @@ void ff7_init_hooks(struct game_obj *_game_object)
 		patch_code_dword(ff7_externals.battle_sub_58ACB9 + 0x65, (uint32_t)&viewport_x_widescreen_fix);
 		patch_code_dword(ff7_externals.display_battle_damage_5BB410 + 0x23F, (uint32_t)&viewport_x_widescreen_fix);
 		patch_code_dword(ff7_externals.display_battle_damage_5BB410 + 0x24C, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_int(ff7_externals.shadow_flare_draw_white_bg_57747E + 0x18, -106);
+		patch_code_int(ff7_externals.shadow_flare_draw_white_bg_57747E + 0x1F, 427);
 		replace_call_function(ff7_externals.ifrit_sub_595A05 + 0x930, ifrit_first_wave_effect_widescreen_fix_sub_66A47E);
 		replace_call_function(ff7_externals.ifrit_sub_595A05 + 0xAEC, ifrit_second_third_wave_effect_widescreen_fix_sub_66A47E);
 		replace_call_function(ff7_externals.ifrit_sub_595A05 + 0xCC0, ifrit_second_third_wave_effect_widescreen_fix_sub_66A47E);

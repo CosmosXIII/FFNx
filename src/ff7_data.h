@@ -1192,6 +1192,10 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	uint32_t barret_limit_3_1_sub_46FFAC = get_relative_call(barret_limit_3_1_main_46FF90, 0x10);
 	uint32_t barret_limit_3_1_sub_470031 = get_absolute_value(barret_limit_3_1_sub_46FFAC, 0x44);
 	ff7_externals.barret_limit_3_1_sub_4700F7 = get_absolute_value(barret_limit_3_1_sub_470031, 0x36);
+	uint32_t shadow_flare_enemy_skill_entry_576FD0 = ff7_externals.enemy_skill_effects_fn_table[22];
+	uint32_t shadow_flare_enemy_skill_sub_576FEA = get_relative_call(shadow_flare_enemy_skill_entry_576FD0, 0x10);
+	uint32_t shadow_flare_enemy_skill_main_loop_57708E = get_absolute_value(shadow_flare_enemy_skill_sub_576FEA, 0x70);
+	ff7_externals.shadow_flare_draw_white_bg_57747E = get_relative_call(shadow_flare_enemy_skill_main_loop_57708E, 0x6C);
 	// --------------------------------
 
 	// Steam achievement
