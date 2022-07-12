@@ -1171,6 +1171,13 @@ void Renderer::setScissor(uint16_t x, uint16_t y, uint16_t width, uint16_t heigh
     // We need to find a better way to do this...
     if(aspect_ratio == AR_WIDESCREEN)
     {
+        // Keep the default scissor for movies
+        bool is_movie_playing = *ff7_externals.word_CC1638 && !ff7_externals.modules_global_object->BGMOVIE_flag;
+        if(is_movie_playing) {
+            scissorOffsetX = getInternalCoordX(x + 106);
+            return;
+        }
+
         // This removes the black bars on the top and bottom of the screen
         if(y = 16 && height == 448)
         {

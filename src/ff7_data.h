@@ -541,6 +541,7 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.sub_40B27B = get_relative_call(ff7_externals.field_loop_sub_63C17F, 0xEE);
 	ff7_externals.word_CC0DD4 = (WORD*)get_absolute_value(ff7_externals.enter_field, 0x124);
 	ff7_externals.word_CC1638 = (WORD*)get_absolute_value(ff7_externals.sub_40B27B, 0x25);
+	ff7_externals.field_init_scripted_bg_movement = get_relative_call(ff7_externals.field_loop_sub_63C17F, 0x182);
 	ff7_externals.field_update_scripted_bg_movement = get_relative_call(ff7_externals.field_loop_sub_63C17F, 0x187);
 	ff7_externals.field_update_background_positions = (void (*)())get_relative_call(ff7_externals.field_loop_sub_63C17F, 0x1A6);
 	ff7_externals.compute_and_submit_draw_gateways_arrows_64DA3B = get_relative_call(ff7_externals.field_loop_sub_63C17F, 0x62C);

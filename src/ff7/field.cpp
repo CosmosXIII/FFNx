@@ -640,6 +640,75 @@ float field_get_smooth_interpolated_value_float(float initial_value, float final
 	return initial_value + delta * (0.5f + sin(-M_PI/2.f + M_PI * (step_idx / (float)n_steps)) / 2.f);
 }
 
+void field_init_scripted_bg_movement()
+{
+	vector2<short> world_pos;
+	if ( !ff7_externals.modules_global_object->world_move_status )
+	{
+		switch ( ff7_externals.modules_global_object->world_move_mode )
+		{
+		case 0:
+			*ff7_externals.field_bg_flag_CC15E4 = 0;
+			*ff7_externals.field_curr_delta_world_pos_x = 0;
+			*ff7_externals.field_curr_delta_world_pos_y = 0;
+			ff7_externals.modules_global_object->world_move_status = 2;
+			break;
+		case 1:
+			*ff7_externals.field_bg_flag_CC15E4 = 1;
+			ff7_externals.modules_global_object->world_move_status = 1;
+			break;
+		case 2:
+		case 3:
+			*ff7_externals.field_bg_flag_CC15E4 = 1;
+			*ff7_externals.scripted_world_move_n_steps = ff7_externals.modules_global_object->field_20;
+			*ff7_externals.scripted_world_move_step_index = 0;
+			world_pos = {*ff7_externals.field_curr_delta_world_pos_x, *ff7_externals.field_curr_delta_world_pos_y};
+
+			if(aspect_ratio = AR_WIDESCREEN)
+				ff7_field_clip_with_camera_range(&world_pos);
+
+			*ff7_externals.scripted_world_initial_pos_x = world_pos.x;
+			*ff7_externals.scripted_world_initial_pos_y = world_pos.y;
+			ff7_externals.modules_global_object->world_move_status = 1;
+			break;
+		case 4:
+			*ff7_externals.field_bg_flag_CC15E4 = 1;
+
+			world_pos = {ff7_externals.modules_global_object->field_A, ff7_externals.modules_global_object->field_C};
+			if(aspect_ratio = AR_WIDESCREEN)
+				ff7_field_clip_with_camera_range(&world_pos);
+
+			*ff7_externals.field_curr_delta_world_pos_x = world_pos.x;
+			*ff7_externals.field_curr_delta_world_pos_y = world_pos.y;
+			ff7_externals.modules_global_object->world_move_status = 2;
+			break;
+		case 5:
+		case 6:
+			*ff7_externals.field_bg_flag_CC15E4 = 1;
+			*ff7_externals.scripted_world_move_n_steps = ff7_externals.modules_global_object->field_20;
+			*ff7_externals.scripted_world_move_step_index = 0;
+
+			world_pos = {*ff7_externals.field_curr_delta_world_pos_x, *ff7_externals.field_curr_delta_world_pos_y};
+			if(aspect_ratio = AR_WIDESCREEN)
+				ff7_field_clip_with_camera_range(&world_pos);
+
+			*ff7_externals.scripted_world_initial_pos_x = world_pos.x;
+			*ff7_externals.scripted_world_initial_pos_y = world_pos.y;
+
+			world_pos = {ff7_externals.modules_global_object->field_A, ff7_externals.modules_global_object->field_C};
+			if(aspect_ratio = AR_WIDESCREEN)
+				ff7_field_clip_with_camera_range(&world_pos);
+
+			*ff7_externals.scripted_world_final_pos_x = world_pos.x;
+			*ff7_externals.scripted_world_final_pos_y = world_pos.y;
+			ff7_externals.modules_global_object->world_move_status = 1;
+			break;
+		default:
+			return;
+		}
+	}
+}
+
 void field_update_scripted_bg_movement()
 {
 	vector2<short> world_pos;
@@ -721,37 +790,6 @@ void field_update_scripted_bg_movement()
 		case 6:
 			if(*ff7_externals.scripted_world_move_n_steps)
 			{
-				field_trigger_header* field_triggers_header_ptr = *ff7_externals.field_triggers_header;
-				if(aspect_ratio = AR_WIDESCREEN)
-				{
-					int cameraRange = field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left;
-#if 1
-					// This only clips backgrounds which width is enought to fill the whole screen in 16:9
-					if(cameraRange >= 320 + 106)
-					{
-						if(213 - *ff7_externals.scripted_world_final_pos_x >  field_triggers_header_ptr->camera_range.right)
-						{
-							*ff7_externals.scripted_world_final_pos_x = 213 - field_triggers_header_ptr->camera_range.right;
-						}
-						if(-213 - *ff7_externals.scripted_world_final_pos_x < field_triggers_header_ptr->camera_range.left)
-						{
-							*ff7_externals.scripted_world_final_pos_x = 213 - field_triggers_header_ptr->camera_range.left;
-						}
-					}
-#else
-					// Currently disabled
-					// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
-					if(213 - *ff7_externals.scripted_world_final_pos_x >  field_triggers_header_ptr->camera_range.right)
-					{
-						*ff7_externals.scripted_world_final_pos_x = std::min(0, static_cast<int>(213 - field_triggers_header_ptr->camera_range.right));
-					}
-					if(-213 - *ff7_externals.scripted_world_final_pos_x < field_triggers_header_ptr->camera_range.left)
-					{
-						*ff7_externals.scripted_world_final_pos_x = std::max(0, static_cast<int>(-213 - field_triggers_header_ptr->camera_range.left));
-					}
-#endif
-				}
-
 				std::function<int(int, int, int, int)> field_get_interpolated_value = ff7_externals.modules_global_object->world_move_mode == 5 ?
 					ff7_externals.field_get_linear_interpolated_value : ff7_externals.field_get_smooth_interpolated_value;
 				*ff7_externals.field_curr_delta_world_pos_x = field_get_interpolated_value(
