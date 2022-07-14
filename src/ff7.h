@@ -2275,6 +2275,7 @@ struct ff7_externals
 	uint32_t midi_fix;
 	void *snowboard_fix;
 	uint32_t cdcheck;
+	uint32_t cdcheck_enter_sub;
 	uint32_t get_inserted_cd_sub;
 	DWORD* insertedCD;
 	uint8_t* requiredCD;
@@ -3017,6 +3018,8 @@ struct ff7_externals
 	uint32_t fat_chocobo_sub_5096F3;
 	uint32_t barret_limit_3_1_sub_4700F7;
 	uint32_t shadow_flare_draw_white_bg_57747E;
+	uint32_t credits_submit_draw_fade_quad_7AA89B;
+	uint32_t menu_submit_draw_fade_quad_6CD64E;
 };
 
 uint32_t ff7gl_load_group(uint32_t group_num, struct matrix_set *matrix_set, struct p_hundred *hundred_data, struct p_group *group_data, struct polygon_data *polygon_data, struct ff7_polygon_set *polygon_set, struct ff7_game_obj *game_object);

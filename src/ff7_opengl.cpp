@@ -34,6 +34,7 @@ unsigned char midi_fix[] = {0x8B, 0x4D, 0x14};
 WORD snowboard_fix[] = {0x0F, 0x10, 0x0F};
 int viewport_x_widescreen_fix = -106;
 int viewport_width_widescreen_fix = 856;
+int viewport_width_plus_x_widescreen_fix = 750;
 int swirl_framebuffer_offset_x_widescreen_fix = 106;
 int swirl_framebuffer_offset_y_widescreen_fix = 64;
 
@@ -304,7 +305,7 @@ void ff7_init_hooks(struct game_obj *_game_object)
 		patch_code_dword(ff7_externals.fat_chocobo_sub_5096F3 + 0x4A, (uint32_t)&viewport_x_widescreen_fix);
 		patch_code_dword(ff7_externals.fat_chocobo_sub_5096F3 + 0x5F, (uint32_t)&viewport_width_widescreen_fix);
 
-		// Worldmap
+		// Worldmap fix
 		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x12, (uint32_t)&viewport_x_widescreen_fix);
 		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x1A3, (uint32_t)&viewport_width_widescreen_fix);
 		patch_code_dword(ff7_externals.world_draw_fade_quad_75551A + 0x2BE, (uint32_t)&viewport_width_widescreen_fix);
@@ -330,6 +331,28 @@ void ff7_init_hooks(struct game_obj *_game_object)
 		patch_code_int(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x40F, 0);
 		patch_code_dword(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x5A5, (uint32_t)&viewport_x_widescreen_fix); // Meteor avoid culling
 		patch_code_int(ff7_externals.world_submit_draw_clouds_and_meteor_7547A6 + 0x5B5, 360); // Meteor avoid culling
+
+		// Gameover fix
+		patch_code_int(ff7_externals.enter_gameover + 0xA4, viewport_x_widescreen_fix);
+		patch_code_int(ff7_externals.enter_gameover + 0xB8, viewport_width_widescreen_fix);
+
+		// CDCheck fix
+		patch_code_int(ff7_externals.cdcheck_enter_sub + 0xB9, viewport_x_widescreen_fix);
+		patch_code_int(ff7_externals.cdcheck_enter_sub + 0xCD, viewport_width_widescreen_fix);
+
+		// Credits fix
+		patch_code_dword(ff7_externals.credits_submit_draw_fade_quad_7AA89B + 0x99, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.credits_submit_draw_fade_quad_7AA89B + 0xE6, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.credits_submit_draw_fade_quad_7AA89B + 0x133, (uint32_t)&viewport_width_plus_x_widescreen_fix);
+		patch_code_dword(ff7_externals.credits_submit_draw_fade_quad_7AA89B + 0x180, (uint32_t)&viewport_width_plus_x_widescreen_fix);
+
+		// Menu, endbattle menu, ... fixes
+		patch_code_dword(ff7_externals.menu_submit_draw_fade_quad_6CD64E + 0x50, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.menu_submit_draw_fade_quad_6CD64E + 0xA8, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.menu_submit_draw_fade_quad_6CD64E + 0x105, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.menu_submit_draw_fade_quad_6CD64E + 0x163, (uint32_t)&viewport_x_widescreen_fix);
+		patch_code_dword(ff7_externals.menu_submit_draw_fade_quad_6CD64E + 0x111, (uint32_t)&viewport_width_widescreen_fix);
+		patch_code_dword(ff7_externals.menu_submit_draw_fade_quad_6CD64E + 0x16F, (uint32_t)&viewport_width_widescreen_fix);
 	}
 
 	// #####################

@@ -253,6 +253,7 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.menu_sub_6CBD43 = get_relative_call(ff7_externals.menu_sub_6CDA83, 0xAF);
 	ff7_externals.menu_sub_701EE4 = get_relative_call(ff7_externals.menu_sub_6CBD43, 0x7);
 	ff7_externals.phs_menu_sub = get_relative_call(ff7_externals.menu_sub_701EE4, 0xE3);
+	ff7_externals.menu_battle_end_sub_6C9543 = get_relative_call(ff7_externals.menu_sub_6CDA83, 0x20);
 
 	switch(version)
 	{
@@ -1197,6 +1198,10 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	uint32_t shadow_flare_enemy_skill_sub_576FEA = get_relative_call(shadow_flare_enemy_skill_entry_576FD0, 0x10);
 	uint32_t shadow_flare_enemy_skill_main_loop_57708E = get_absolute_value(shadow_flare_enemy_skill_sub_576FEA, 0x70);
 	ff7_externals.shadow_flare_draw_white_bg_57747E = get_relative_call(shadow_flare_enemy_skill_main_loop_57708E, 0x6C);
+
+	ff7_externals.cdcheck_enter_sub = get_absolute_value(main_loop, 0x390);
+	ff7_externals.credits_submit_draw_fade_quad_7AA89B = get_relative_call(credits_main_loop, 0xD9);
+	ff7_externals.menu_submit_draw_fade_quad_6CD64E = get_relative_call(ff7_externals.menu_battle_end_sub_6C9543, 0x104);
 	// --------------------------------
 
 	// Steam achievement
@@ -1204,7 +1209,6 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	uint32_t* pointer_functions_7C2980 = (uint32_t*)get_absolute_value(sub_434347, 0x19C);
 	ff7_externals.battle_enemy_killed_sub_433BD2 = pointer_functions_7C2980[0];
 	ff7_externals.battle_sub_5C7F94 = get_relative_call(ff7_externals.battle_enemy_killed_sub_433BD2, 0x2AF);
-	ff7_externals.menu_battle_end_sub_6C9543 = get_relative_call(ff7_externals.menu_sub_6CDA83, 0x20);
 	ff7_externals.menu_battle_end_mode = (uint16_t*)get_absolute_value(ff7_externals.menu_battle_end_sub_6C9543, 0x2C);
 	uint32_t menu_sub_6CBD54 = get_relative_call(ff7_externals.menu_sub_6CDA83, 0xC1);
 	ff7_externals.menu_sub_71FF95 = get_relative_call(menu_sub_6CBD54, 0x7);
