@@ -2988,6 +2988,7 @@ struct ff7_externals
 	uint32_t world_sub_75079D;
 	uint32_t world_sub_751EFC;
 	uint32_t world_culling_bg_meshes_75F263;
+	uint32_t world_submit_draw_bg_meshes_75F68C;
 	uint32_t world_compute_skybox_data_754100;
 	uint32_t world_submit_draw_clouds_and_meteor_7547A6;
 
