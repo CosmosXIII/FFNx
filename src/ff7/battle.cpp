@@ -22,6 +22,7 @@
 #include "../ff7.h"
 #include "../log.h"
 #include "../achievement.h"
+#include "widescreen.h"
 
 void magic_thread_start(void (*func)())
 {
@@ -60,13 +61,11 @@ void ff7_display_battle_action_text_sub_6D71FA(short command_id, short action_id
 
 void ifrit_first_wave_effect_widescreen_fix_sub_66A47E(int wave_data_pointer) {
     if(aspect_ratio == AR_WIDESCREEN) {
-        constexpr int viewport_x_fix = -106;
-        constexpr int viewport_y_fix = 480 - 332;
-        constexpr int viewport_width_1_fix = 340 - 255;
-        *(short*)(wave_data_pointer + 8) += + viewport_x_fix;
-        *(short*)(wave_data_pointer + 16) += + viewport_x_fix + viewport_width_1_fix * 2;
-        *(short*)(wave_data_pointer + 24) += + viewport_x_fix;
-        *(short*)(wave_data_pointer + 32) += + viewport_x_fix + viewport_width_1_fix * 2;
+        int viewport_width_1_fix = ceil(255.f / game_width * wide_viewport_width) - 255;
+        *(short*)(wave_data_pointer + 8) += wide_viewport_x;
+        *(short*)(wave_data_pointer + 16) += wide_viewport_x + viewport_width_1_fix * 2;
+        *(short*)(wave_data_pointer + 24) += wide_viewport_x;
+        *(short*)(wave_data_pointer + 32) += wide_viewport_x + viewport_width_1_fix * 2;
     }
 
     ff7_externals.engine_draw_sub_66A47E(wave_data_pointer);
@@ -74,14 +73,12 @@ void ifrit_first_wave_effect_widescreen_fix_sub_66A47E(int wave_data_pointer) {
 
 void ifrit_second_third_wave_effect_widescreen_fix_sub_66A47E(int wave_data_pointer) {
     if(aspect_ratio == AR_WIDESCREEN) {
-        constexpr int viewport_x_fix = -106;
-        constexpr int viewport_height_fix = 480 - 332;
-        constexpr int viewport_width_1_fix = 340 - 255;
-        constexpr int viewport_width_2_fix = 87 - 65;
-        *(short*)(wave_data_pointer + 8) += + viewport_x_fix + viewport_width_1_fix * 2;
-        *(short*)(wave_data_pointer + 16) += + viewport_x_fix + (viewport_width_1_fix + viewport_width_2_fix) * 2;
-        *(short*)(wave_data_pointer + 24) += + viewport_x_fix + viewport_width_1_fix * 2;
-        *(short*)(wave_data_pointer + 32) += + viewport_x_fix + (viewport_width_1_fix + viewport_width_2_fix) * 2;
+        int viewport_width_1_fix = ceil(255.f / game_width * wide_viewport_width) - 255;
+        int viewport_width_2_fix = ceil(65.f / game_width * wide_viewport_width) - 65;
+        *(short*)(wave_data_pointer + 8) += wide_viewport_x + viewport_width_1_fix * 2;
+        *(short*)(wave_data_pointer + 16) += wide_viewport_x + (viewport_width_1_fix + viewport_width_2_fix) * 2;
+        *(short*)(wave_data_pointer + 24) += wide_viewport_x + viewport_width_1_fix * 2;
+        *(short*)(wave_data_pointer + 32) += wide_viewport_x + (viewport_width_1_fix + viewport_width_2_fix) * 2;
     }
 
     ff7_externals.engine_draw_sub_66A47E(wave_data_pointer);

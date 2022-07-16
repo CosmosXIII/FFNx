@@ -33,6 +33,7 @@
 #include "../sfx.h"
 #include "../movies.h"
 #include "../common.h"
+#include "widescreen.h"
 #include "defs.h"
 #include <set>
 #include <cmath>
@@ -395,8 +396,8 @@ bool ff7_field_do_draw_3d_model(short x, short y)
 {
 	if(*ff7_externals.field_bg_flag_CC15E4)
 		return 1;
-	int left_offset_x = aspect_ratio == AR_WIDESCREEN ? 93 : 40;
-	int right_offset_x = aspect_ratio == AR_WIDESCREEN ? 453 : 400;
+	int left_offset_x = 40 + (aspect_ratio == AR_WIDESCREEN ? abs(wide_viewport_x) - 50 : 0);
+	int right_offset_x = 400 + (aspect_ratio == AR_WIDESCREEN ? abs(wide_viewport_x) - 50 : 0);
 	return x > ff7_externals.field_vector2_CFF204->x - left_offset_x && x < ff7_externals.field_vector2_CFF204->x + right_offset_x &&
 		y > ff7_externals.field_vector2_CFF204->y - 120 && y < ff7_externals.field_vector2_CFF204->y + 460;
 }
@@ -405,9 +406,9 @@ void ff7_field_set_fade_quad_size(int x, int y, int width, int height)
 {
 	if(aspect_ratio == AR_WIDESCREEN)
 	{
-		x -= 106;
+		x -= abs(wide_viewport_x);
 		y -= ff7_center_fields ? 16 : 0;
-		width += 213;
+		width += (wide_viewport_width - game_width);
 		height += 32;
 	}
 	ff7_externals.field_sub_63AC3F(x, y, width, height);
@@ -422,7 +423,7 @@ void field_clip_with_camera_range_float(vector2<float>* point)
 		int cameraRange = field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left;
 #if 1
 		// This only clips backgrounds which width is enought to fill the whole screen in 16:9
-		if(cameraRange >= 320 + 106) halfWidth = 213;
+		if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) halfWidth = wide_viewport_width / 4;
 #else
 		// Currently disabled
 		// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
@@ -448,7 +449,7 @@ void float_sub_643628(field_trigger_header *trigger_header, vector2<float> *delt
 		int cameraRange = trigger_header->camera_range.right - trigger_header->camera_range.left;
 #if 1
 		// This only clips backgrounds which width is enought to fill the whole screen in 16:9
-		if(cameraRange > 320 + 106) halfWidth = 213;
+		if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) halfWidth = wide_viewport_width / 4;
 #else
 		// Currently disabled
 		// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
@@ -621,7 +622,7 @@ void field_init_scripted_bg_movement()
 			*ff7_externals.scripted_world_move_step_index = 0;
 			world_pos = {*ff7_externals.field_curr_delta_world_pos_x, *ff7_externals.field_curr_delta_world_pos_y};
 
-			if(aspect_ratio = AR_WIDESCREEN)
+			if(aspect_ratio == AR_WIDESCREEN)
 				ff7_field_clip_with_camera_range(&world_pos);
 
 			*ff7_externals.scripted_world_initial_pos_x = world_pos.x;
@@ -632,7 +633,7 @@ void field_init_scripted_bg_movement()
 			*ff7_externals.field_bg_flag_CC15E4 = 1;
 
 			world_pos = {ff7_externals.modules_global_object->field_A, ff7_externals.modules_global_object->field_C};
-			if(aspect_ratio = AR_WIDESCREEN)
+			if(aspect_ratio == AR_WIDESCREEN)
 				ff7_field_clip_with_camera_range(&world_pos);
 
 			*ff7_externals.field_curr_delta_world_pos_x = world_pos.x;
@@ -646,14 +647,14 @@ void field_init_scripted_bg_movement()
 			*ff7_externals.scripted_world_move_step_index = 0;
 
 			world_pos = {*ff7_externals.field_curr_delta_world_pos_x, *ff7_externals.field_curr_delta_world_pos_y};
-			if(aspect_ratio = AR_WIDESCREEN)
+			if(aspect_ratio == AR_WIDESCREEN)
 				ff7_field_clip_with_camera_range(&world_pos);
 
 			*ff7_externals.scripted_world_initial_pos_x = world_pos.x;
 			*ff7_externals.scripted_world_initial_pos_y = world_pos.y;
 
 			world_pos = {ff7_externals.modules_global_object->field_A, ff7_externals.modules_global_object->field_C};
-			if(aspect_ratio = AR_WIDESCREEN)
+			if(aspect_ratio == AR_WIDESCREEN)
 				ff7_field_clip_with_camera_range(&world_pos);
 
 			*ff7_externals.scripted_world_final_pos_x = world_pos.x;
