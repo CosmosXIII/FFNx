@@ -1189,7 +1189,7 @@ void Renderer::setScissor(uint16_t x, uint16_t y, uint16_t width, uint16_t heigh
         // This sets a scissor offset for field with width not enough to fill the screen in 16:9
         struct game_mode* mode = getmode_cached();
         field_trigger_header* field_triggers_header_ptr = *ff7_externals.field_triggers_header;
-        if(mode->driver_mode == MODE_FIELD && field_triggers_header_ptr != nullptr)
+        if(mode->driver_mode == MODE_FIELD && *ff7_externals.field_level_data_pointer != 0)
         {
             int cameraRange = (field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left);
             if(cameraRange < game_width / 2 + abs(wide_viewport_x))
