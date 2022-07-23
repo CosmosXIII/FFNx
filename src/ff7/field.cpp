@@ -881,10 +881,13 @@ void compute_pointer_hand_position(vector2<float> field_3d_world_coord, int mode
 	cursor_position.x = field_3d_world_coord.x + view_multiplier * cursor_delta_pos.x + ff7_externals.field_curr_half_viewport_width_height_CFF1FC->x;
 	cursor_position.y = field_3d_world_coord.y + view_multiplier * (cursor_delta_pos.y - 8) + ff7_externals.field_curr_half_viewport_width_height_CFF1FC->y;
 
-	if(cursor_position.x > ff7_externals.field_viewport_xy_CFF204->x + 320 * view_multiplier)
-		cursor_position.x = ff7_externals.field_viewport_xy_CFF204->x + 320 * view_multiplier;
-	if(cursor_position.x < ff7_externals.field_viewport_xy_CFF204->x)
-		cursor_position.x = ff7_externals.field_viewport_xy_CFF204->x;
+
+	int viewport_x = aspect_ratio == AR_WIDESCREEN ? wide_viewport_x : ff7_externals.field_viewport_xy_CFF204->x;
+	int viewport_width = aspect_ratio == AR_WIDESCREEN ? wide_viewport_width / 2 : 320;
+	if(cursor_position.x > viewport_x + viewport_width * view_multiplier)
+		cursor_position.x = viewport_x + viewport_width * view_multiplier;
+	if(cursor_position.x < viewport_x)
+		cursor_position.x = viewport_x;
 	if(cursor_position.y > ff7_externals.field_viewport_xy_CFF204->y + 224 * view_multiplier)
 		cursor_position.y = ff7_externals.field_viewport_xy_CFF204->y + 224 * view_multiplier;
 	if(cursor_position.y < ff7_externals.field_viewport_xy_CFF204->y - 32)

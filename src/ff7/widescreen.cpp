@@ -36,6 +36,14 @@ void ff7_widescreen_hook_init() {
 	replace_function(ff7_externals.field_layer3_clip_with_camera_range_643628, ff7_field_layer3_clip_with_camera_range);
 	replace_function(ff7_externals.field_culling_model_639252, ff7_field_do_draw_3d_model);
 	replace_call_function(ff7_externals.field_sub_63AC66 + 0xD5, ff7_field_set_fade_quad_size);
+    patch_code_dword(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x6A, (uint32_t)&wide_viewport_x);
+    patch_code_dword(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x80, (uint32_t)&wide_viewport_x);
+    patch_code_dword(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x94, (uint32_t)&wide_viewport_x);
+    patch_code_dword(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x9C, (uint32_t)&wide_viewport_x);
+    patch_code_int(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x64, wide_viewport_width / 2);
+    patch_code_int(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x7A, wide_viewport_width / 2);
+    memset_code(ff7_externals.field_submit_draw_pointer_hand_60D572 + 0x39, 0x90, 12); // Remove useless culling cursor
+    patch_code_int(ff7_externals.field_init_viewport_values + 0xBE, wide_viewport_width + wide_viewport_x - 60);
 
     // Swirl fix
     patch_code_dword(ff7_externals.swirl_loop_sub_4026D4 + 0x335, (uint32_t)&wide_viewport_x);

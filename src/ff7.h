@@ -2539,6 +2539,7 @@ struct ff7_externals
 	uint32_t field_battle_toggle;
 	uint32_t worldmap_battle_toggle;
 	uint32_t enter_field;
+	uint32_t field_init_viewport_values;
 	uint32_t field_loop_sub_63C17F;
 	uint32_t field_update_models_positions;
 	int (*field_update_single_model_position)(short);

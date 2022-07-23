@@ -525,6 +525,7 @@ void ff7_find_externals(struct ff7_game_obj* game_object)
 	ff7_externals.on_gameover_exit = ff7_externals.exit_gameover + 0x21;
 
 	ff7_externals.enter_field = get_absolute_value(main_loop, 0x90D);
+	ff7_externals.field_init_viewport_values = get_relative_call(main_init_loop, 0x375);
 	ff7_externals.field_loop_sub_63C17F = get_relative_call(field_main_loop, 0x59);
 	ff7_externals.field_update_models_positions = get_relative_call(ff7_externals.field_loop_sub_63C17F, 0x5DD);
 	ff7_externals.field_update_single_model_position = (int (*)(int16_t))get_relative_call(ff7_externals.field_update_models_positions, 0x8BC);
