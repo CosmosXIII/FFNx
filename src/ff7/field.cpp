@@ -440,7 +440,7 @@ void field_clip_with_camera_range_float(vector2<float>* point)
 		int cameraRange = field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left;
 #if 1
 		// This only clips backgrounds which width is enought to fill the whole screen in 16:9
-		if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) half_width = wide_viewport_width / 4;
+		if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) half_width = ceil(wide_viewport_width / 4.f);
 #else
 		// Currently disabled
 		// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
@@ -466,7 +466,7 @@ void float_sub_643628(field_trigger_header *trigger_header, vector2<float> *delt
 		int cameraRange = trigger_header->camera_range.right - trigger_header->camera_range.left;
 #if 1
 		// This only clips backgrounds which width is enought to fill the whole screen in 16:9
-		if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) half_width = wide_viewport_width / 4;
+		if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) half_width = ceil(wide_viewport_width / 4.f);
 #else
 		// Currently disabled
 		// This tries to centers the background for fields which width is bigger than 320 but less than what is needed to fill the whole screen in 16:9
@@ -517,7 +517,7 @@ void field_widescreen_width_clip_with_camera_range(vector2<short>* point)
 	int cameraRange = field_triggers_header_ptr->camera_range.right - field_triggers_header_ptr->camera_range.left;
 
 	// This only clips backgrounds which width is enought to fill the whole screen in 16:9
-	if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) half_width = wide_viewport_width / 4;
+	if(cameraRange >= game_width / 2 + abs(wide_viewport_x)) half_width = ceil(wide_viewport_width / 4);
 
 	if (point->x > field_triggers_header_ptr->camera_range.right - half_width)
 		point->x = field_triggers_header_ptr->camera_range.right - half_width;
