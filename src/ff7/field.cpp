@@ -219,14 +219,10 @@ void field_layer1_pick_tiles(short bg_position_x, short bg_position_y)
 		uint32_t tile_index = (*ff7_externals.field_layer1_palette_sort)[i];
 		layer1_tiles[tile_index].field_1044 = 1;
 
-		//if(layer1_tiles[tile_index].x < bg_position.x && layer1_tiles[tile_index].x > bg_position.x - 336
-		//	&& layer1_tiles[tile_index].y < bg_position.y && layer1_tiles[tile_index].y > bg_position.y - 256)
-		{
-			tile_position.x = initial_pos.x + field_bg_multiplier * layer1_tiles[tile_index].x;
-			tile_position.y = initial_pos.y + field_bg_multiplier * layer1_tiles[tile_index].y;
-			ff7_externals.add_page_tile(tile_position.x, tile_position.y, 0.9997, layer1_tiles[tile_index].u,
-										layer1_tiles[tile_index].v, layer1_tiles[tile_index].palette_index, layer1_tiles[tile_index].page);
-		}
+		tile_position.x = initial_pos.x + field_bg_multiplier * layer1_tiles[tile_index].x;
+		tile_position.y = initial_pos.y + field_bg_multiplier * layer1_tiles[tile_index].y;
+		ff7_externals.add_page_tile(tile_position.x, tile_position.y, 0.9997, layer1_tiles[tile_index].u,
+									layer1_tiles[tile_index].v, layer1_tiles[tile_index].palette_index, layer1_tiles[tile_index].page);
 	}
 }
 
@@ -310,17 +306,6 @@ void field_layer3_pick_tiles(short bg_position_x, short bg_position_y)
 			tile_position.x = layer3_tiles[tile_index].x;
 			tile_position.y = layer3_tiles[tile_index].y;
 
-			if(tile_position.x <= bg_position.x - 352 || tile_position.x >= bg_position.x)
-			{
-				short width = (*ff7_externals.field_triggers_header)->bg3_width;
-				tile_position.x += (tile_position.x >= bg_position.x - 160) ? -width : width;
-			}
-			if(tile_position.y <= bg_position.y - 256 || tile_position.y >= bg_position.y)
-			{
-				short height = (*ff7_externals.field_triggers_header)->bg3_height;
-				tile_position.y += (tile_position.y >= bg_position.y - 112) ? -height : height;
-			}
-
 			char anim_group = layer3_tiles[tile_index].anim_group;
 			if(anim_group && !(ff7_externals.modules_global_object->background_sprite_layer[anim_group] & layer3_tiles[tile_index].anim_bitmask))
 				continue;
@@ -368,19 +353,8 @@ void field_layer4_pick_tiles(short bg_position_x, short bg_position_y)
 			tile_position.x = layer4_tiles[tile_index].x;
 			tile_position.y = layer4_tiles[tile_index].y;
 
-			if(tile_position.x <= bg_position.x - 352 || tile_position.x >= bg_position.x)
-			{
-				short width = (*ff7_externals.field_triggers_header)->bg4_width;
-				tile_position.x += (tile_position.x >= bg_position.x - 160) ? -width : width;
-			}
-			if(tile_position.y <= bg_position.y - 256 || tile_position.y >= bg_position.y)
-			{
-				short height = (*ff7_externals.field_triggers_header)->bg4_height;
-				tile_position.y += (tile_position.y >= bg_position.y) ? -height : height;
-			}
-
 			char anim_group = layer4_tiles[tile_index].anim_group;
-			if(tile_position.x < bg_position.x - 352 || tile_position.x > bg_position.x || anim_group && !(ff7_externals.modules_global_object->background_sprite_layer[anim_group] & layer4_tiles[tile_index].anim_bitmask))
+			if(anim_group && !(ff7_externals.modules_global_object->background_sprite_layer[anim_group] & layer4_tiles[tile_index].anim_bitmask))
 				continue;
 
 			layer4_tiles[tile_index].field_1040 = 1;
