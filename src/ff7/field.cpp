@@ -306,6 +306,17 @@ void field_layer3_pick_tiles(short bg_position_x, short bg_position_y)
 			tile_position.x = layer3_tiles[tile_index].x;
 			tile_position.y = layer3_tiles[tile_index].y;
 
+			if(tile_position.x <= bg_position.x - 352 || tile_position.x >= bg_position.x)
+			{
+				short width = (*ff7_externals.field_triggers_header)->bg3_width;
+				tile_position.x += (tile_position.x >= bg_position.x - 160) ? -width : width;
+			}
+			if(tile_position.y <= bg_position.y - 256 || tile_position.y >= bg_position.y)
+			{
+				short height = (*ff7_externals.field_triggers_header)->bg3_height;
+				tile_position.y += (tile_position.y >= bg_position.y - 112) ? -height : height;
+			}
+
 			char anim_group = layer3_tiles[tile_index].anim_group;
 			if(anim_group && !(ff7_externals.modules_global_object->background_sprite_layer[anim_group] & layer3_tiles[tile_index].anim_bitmask))
 				continue;
@@ -352,6 +363,17 @@ void field_layer4_pick_tiles(short bg_position_x, short bg_position_y)
 			vector2<float> tile_position;
 			tile_position.x = layer4_tiles[tile_index].x;
 			tile_position.y = layer4_tiles[tile_index].y;
+
+			if(tile_position.x <= bg_position.x - 352 || tile_position.x >= bg_position.x)
+			{
+				short width = (*ff7_externals.field_triggers_header)->bg4_width;
+				tile_position.x += (tile_position.x >= bg_position.x - 160) ? -width : width;
+			}
+			if(tile_position.y <= bg_position.y - 256 || tile_position.y >= bg_position.y)
+			{
+				short height = (*ff7_externals.field_triggers_header)->bg4_height;
+				tile_position.y += (tile_position.y >= bg_position.y) ? -height : height;
+			}
 
 			char anim_group = layer4_tiles[tile_index].anim_group;
 			if(anim_group && !(ff7_externals.modules_global_object->background_sprite_layer[anim_group] & layer4_tiles[tile_index].anim_bitmask))
